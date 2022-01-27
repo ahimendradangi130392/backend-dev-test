@@ -8,7 +8,6 @@
       "name": "aws",
       "runtime": "nodejs12.x",
       "stage": "dev",
-      "region": "us-east-1",
       "lambdaHashingVersion": "20201221",
       "environment": {
         "PG_HOST_NAME": "rds-postgres-backend-dev-test.c4ybpho24jca.ap-south-1.rds.amazonaws.com",
@@ -17,6 +16,7 @@
         "PG_HOST_PASSWORD": "bACKENDLambda94066",
         "PG_HOST_DATABASE": "backendDevTest"
       },
+      "region": "us-east-1",
       "versionFunctions": true,
       "compiledCloudFormationTemplate": {
         "AWSTemplateFormatVersion": "2010-09-09",
@@ -227,7 +227,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/backend-dev-test/dev/1643264816759-2022-01-27T06:26:56.759Z/backend-dev-test.zip"
+                "S3Key": "serverless/backend-dev-test/dev/1643291454093-2022-01-27T13:50:54.093Z/backend-dev-test.zip"
               },
               "Handler": "s_main.handler",
               "Runtime": "nodejs12.x",
@@ -254,14 +254,14 @@
               "MainLogGroup"
             ]
           },
-          "MainLambdaVersionNFbMYhYAH4uLh0PgZwdwmzzT3Pm9h6n30lvqwaDM": {
+          "MainLambdaVersion2kiYQyS1lxBdoUMXa4LDGJ4G6HFc16MyqlpaoprtQ": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "MainLambdaFunction"
               },
-              "CodeSha256": "DNr3VSZMuZWbuPU/zQLAXl14AVCxkfZloAKgY69MopI="
+              "CodeSha256": "5nXSHJmBHMACejxDQRhZ73tpBxahToddQgB0DgAWEOc="
             }
           },
           "ApiGatewayRestApi": {
@@ -386,7 +386,7 @@
               "MainLambdaPermissionApiGateway"
             ]
           },
-          "ApiGatewayDeployment1643264731865": {
+          "ApiGatewayDeployment1643291292447": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -545,7 +545,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/backend-dev-test/dev/1643264816759-2022-01-27T06:26:56.759Z/custom-resources.zip"
+                "S3Key": "serverless/backend-dev-test/dev/1643291454093-2022-01-27T13:50:54.093Z/custom-resources.zip"
               },
               "FunctionName": "backend-dev-test-dev-custom-resource-apigw-cw-role",
               "Handler": "apiGatewayCloudWatchRole/handler.handler",
@@ -607,7 +607,7 @@
           "MainLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "MainLambdaVersionNFbMYhYAH4uLh0PgZwdwmzzT3Pm9h6n30lvqwaDM"
+              "Ref": "MainLambdaVersion2kiYQyS1lxBdoUMXa4LDGJ4G6HFc16MyqlpaoprtQ"
             },
             "Export": {
               "Name": "sls-backend-dev-test-dev-MainLambdaFunctionQualifiedArn"
@@ -767,7 +767,7 @@
         "timeout": 6,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "MainLambdaVersionNFbMYhYAH4uLh0PgZwdwmzzT3Pm9h6n30lvqwaDM"
+        "versionLogicalId": "MainLambdaVersion2kiYQyS1lxBdoUMXa4LDGJ4G6HFc16MyqlpaoprtQ"
       }
     },
     "configValidationMode": "warn",
@@ -797,10 +797,10 @@
     "isDashboardAppPreconfigured": true,
     "orgUid": "93dc619f-6071-43d5-990b-1e70be9485e3",
     "appUid": "5qCxn7yrXvkDqM5t7w",
-    "artifact": "C:\\Users\\Hp\\Desktop\\workspace\\backend-dev-test\\serverless-backend-dev-test\\backend-dev-test\\.serverless\\backend-dev-test.zip"
+    "artifact": "C:\\Users\\Hp\\Desktop\\workspace\\backend-dev-test\\backend-dev-test\\.serverless\\backend-dev-test.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/backend-dev-test/dev/1643264816759-2022-01-27T06:26:56.759Z",
+    "artifactDirectoryName": "serverless/backend-dev-test/dev/1643291454093-2022-01-27T13:50:54.093Z",
     "artifact": "backend-dev-test.zip"
   }
 }

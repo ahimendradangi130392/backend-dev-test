@@ -207,7 +207,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/backend-dev-test/dev/1643264816759-2022-01-27T06:26:56.759Z/backend-dev-test.zip"
+          "S3Key": "serverless/backend-dev-test/dev/1643291454093-2022-01-27T13:50:54.093Z/backend-dev-test.zip"
         },
         "Handler": "s_main.handler",
         "Runtime": "nodejs12.x",
@@ -234,14 +234,14 @@
         "MainLogGroup"
       ]
     },
-    "MainLambdaVersionNFbMYhYAH4uLh0PgZwdwmzzT3Pm9h6n30lvqwaDM": {
+    "MainLambdaVersion2kiYQyS1lxBdoUMXa4LDGJ4G6HFc16MyqlpaoprtQ": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "MainLambdaFunction"
         },
-        "CodeSha256": "DNr3VSZMuZWbuPU/zQLAXl14AVCxkfZloAKgY69MopI="
+        "CodeSha256": "5nXSHJmBHMACejxDQRhZ73tpBxahToddQgB0DgAWEOc="
       }
     },
     "ApiGatewayRestApi": {
@@ -366,7 +366,7 @@
         "MainLambdaPermissionApiGateway"
       ]
     },
-    "ApiGatewayDeployment1643264731865": {
+    "ApiGatewayDeployment1643291292447": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -525,7 +525,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/backend-dev-test/dev/1643264816759-2022-01-27T06:26:56.759Z/custom-resources.zip"
+          "S3Key": "serverless/backend-dev-test/dev/1643291454093-2022-01-27T13:50:54.093Z/custom-resources.zip"
         },
         "FunctionName": "backend-dev-test-dev-custom-resource-apigw-cw-role",
         "Handler": "apiGatewayCloudWatchRole/handler.handler",
@@ -587,7 +587,7 @@
     "MainLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "MainLambdaVersionNFbMYhYAH4uLh0PgZwdwmzzT3Pm9h6n30lvqwaDM"
+        "Ref": "MainLambdaVersion2kiYQyS1lxBdoUMXa4LDGJ4G6HFc16MyqlpaoprtQ"
       },
       "Export": {
         "Name": "sls-backend-dev-test-dev-MainLambdaFunctionQualifiedArn"

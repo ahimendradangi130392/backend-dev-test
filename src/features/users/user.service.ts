@@ -82,13 +82,10 @@ export class UserService {
       var ids = JSON.parse(`${detail.id}`);
       var phoneNumber = JSON.parse(`${detail.phoneNumber}`);
 
-      const encriptedtPassword = await password.bcryptPassword(data.password);
-
       if (ids.length > 0 && phoneNumber.length > 0) {
         const userData = {
           firstName: `${data.firstName}`,
           lastName: `${data.lastName}`,
-          password: `${encriptedtPassword}`,
           address: `${data.address}`,
         };
 
