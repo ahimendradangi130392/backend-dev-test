@@ -1,8 +1,21 @@
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
+import { NestFactory } from "@nestjs/core";
+import { ConfigService } from "@nestjs/config";
+import { AppModule } from "./app.module";
+import { NestApplicationOptions, ValidationPipe } from "@nestjs/common";
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  await app.listen(3000);
+  let nestAppOptions: NestApplicationOptions = {};
+
+  const app = await NestFactory.create(AppModule, nestAppOptions);
+  app.enableCors();
+
+  app.useGlobalPipes(new ValidationPipe());
+  const configService = app.get(ConfigService);
+
+  /**
+   * Enable CORS
+   */
+  app.enableCors(configService.get("app.corsOptions"));
+  await app.listen(process.env.PORT);
 }
 bootstrap();

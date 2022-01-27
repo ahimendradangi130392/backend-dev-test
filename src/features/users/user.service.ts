@@ -1,19 +1,15 @@
-import { Injectable } from '@nestjs/common';
-import { GetDto, UserDto } from '../../common/dto/user.dto';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { User } from 'src/common/entities/user.entity';
-import password from 'src/password';
-import { type } from 'os';
+import { Injectable } from "@nestjs/common";
+import { GetDto, UserDto } from "../../common/dto/user.dto";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
+import { User } from "src/common/entities/user.entity";
+import password from "src/password";
 
 @Injectable()
 export class UserService {
-  createUsers(data: UserDto) {
-    throw new Error('Method not implemented.');
-  }
   constructor(
     @InjectRepository(User)
-    private userModel: Repository<User>,
+    private userModel: Repository<User>
   ) {}
 
   async createUser(user: UserDto) {
@@ -62,8 +58,6 @@ export class UserService {
         user = await this.userModel.findOne({
           where: { userId: data.id, phoneNumber: `${data.phoneNumber}` },
         });
-        delete user.password;
-
       } else {
         user = await this.userModel.find();
 
@@ -72,7 +66,7 @@ export class UserService {
         });
       }
 
-      if (!user) {
+      if (!user || user == undefined) {
         return false;
       } else {
         return user;
@@ -82,7 +76,7 @@ export class UserService {
     }
   }
 
-  async updateUser(data, detail: GetDto): Promise<any> {
+  async updateUser(data, detail): Promise<any> {
     try {
       let user;
       var ids = JSON.parse(`${detail.id}`);
@@ -102,11 +96,12 @@ export class UserService {
           .createQueryBuilder()
           .update(User)
           .set(userData)
-          .where("userId IN (:...id)" && "phoneNumber IN (:...phone)", { id: ids} && { phone: phoneNumber})
+          .where("userId IN (:...id)", { id: ids })
+          .andWhere("phoneNumber IN (:...phone)", { phone: phoneNumber })
           .execute();
-      } 
-      
-      if (!user) {
+      }
+
+      if (!user || user.affected == 0) {
         return false;
       } else {
         return true;
@@ -118,18 +113,22 @@ export class UserService {
 
   async deleteUser(detail): Promise<any> {
     try {
-      let deleteUser;
       var ids = JSON.parse(`${detail.id}`);
       var phoneNumber = JSON.parse(`${detail.phoneNumber}`);
 
-        await this.userModel
+      const deleteUser = await this.userModel
         .createQueryBuilder()
         .delete()
         .from(User)
-        .where("userId IN (:...id)" && "phoneNumber IN (:...phone)", { id: ids} && { phone: phoneNumber})
+        .where("userId IN (:...id)", { id: ids })
+        .andWhere("phoneNumber IN (:...phone)", { phone: phoneNumber })
         .execute();
-       
+
+      if (!deleteUser || deleteUser.affected == 0) {
+        return false;
+      } else {
         return true;
+      }
     } catch (error) {
       console.log(error);
     }
@@ -158,16 +157,16 @@ export class UserService {
       var phoneNumber = JSON.parse(`${detail.phoneNumber}`);
 
       user = await this.userModel
-      .createQueryBuilder()
-      .where("User.userId IN (:...id)" && "User.phoneNumber IN (:...phone)", { id: ids} && { phone: phoneNumber})
-      .getMany();
-      
+        .createQueryBuilder()
+        .where(`"userId" IN (:...id)`, { id: ids })
+        .andWhere(`"phoneNumber" IN (:...phone)`, { phone: phoneNumber })
+        .getMany();
+
       user.map((data) => {
         delete data.password;
       });
 
       return user;
-      
     } catch (error) {
       console.log(error);
     }

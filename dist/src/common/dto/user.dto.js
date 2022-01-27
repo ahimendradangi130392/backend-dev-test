@@ -12,7 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.GetDto = exports.UserDto = void 0;
 const class_validator_1 = require("class-validator");
 class UserDto {
-    ;
 }
 __decorate([
     (0, class_validator_1.IsOptional)(),
@@ -26,6 +25,7 @@ __decorate([
 __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.MinLength)(2),
     __metadata("design:type", String)
 ], UserDto.prototype, "firstName", void 0);
 __decorate([
@@ -39,30 +39,31 @@ __decorate([
     (0, class_validator_1.MaxLength)(20),
     (0, class_validator_1.MinLength)(8),
     (0, class_validator_1.Matches)(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, {
-        message: 'Password is too weak, we need at least one uppercase letter, one lowercase letter, one number and one special character',
+        message: "Password is too weak, we need at least one uppercase letter, one lowercase letter, one number and one special character",
     }),
     __metadata("design:type", String)
 ], UserDto.prototype, "password", void 0);
 __decorate([
-    (0, class_validator_1.IsNumberString)(),
-    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.MaxLength)(10),
+    (0, class_validator_1.MinLength)(10),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], UserDto.prototype, "phoneNumber", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], UserDto.prototype, "address", void 0);
 exports.UserDto = UserDto;
 class GetDto {
 }
 __decorate([
-    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Number)
 ], GetDto.prototype, "id", void 0);
 __decorate([
-    (0, class_validator_1.IsNumberString)(),
-    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], GetDto.prototype, "phoneNumber", void 0);
 exports.GetDto = GetDto;

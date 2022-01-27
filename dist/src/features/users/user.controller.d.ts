@@ -1,5 +1,5 @@
-import { UserService } from './user.service';
-import { GetDto, UserDto } from '../../common/dto/user.dto';
+import { UserService } from "./user.service";
+import { GetDto, UserDto } from "../../common/dto/user.dto";
 export declare class UserController {
     private readonly userService;
     constructor(userService: UserService);
@@ -15,6 +15,10 @@ export declare class UserController {
         error?: undefined;
     }>;
     getUserData(data: GetDto): Promise<{
+        success: boolean;
+        message: string;
+        data?: undefined;
+    } | {
         success: boolean;
         data: any;
         message: string;

@@ -9,23 +9,22 @@ import {
   Put,
   Query,
   Injectable,
-} from '@nestjs/common';
-import { UserService } from './user.service';
-
-import { GetDto, UserDto } from '../../common/dto/user.dto';
+} from "@nestjs/common";
+import { UserService } from "./user.service";
+import { GetDto, UserDto } from "../../common/dto/user.dto";
 
 @Injectable()
 @Controller()
 export class UserController {
   constructor(private readonly userService: UserService) {}
-  @Post('/users')
+  @Post("/users")
   async saveUserData(@Body() data: UserDto) {
     try {
       const user = await this.userService.findUserEmail(data.email);
       if (user) {
         return {
           success: false,
-          message: 'User already registered.',
+          message: "User already registered.",
           error: {},
         };
       }
@@ -34,104 +33,99 @@ export class UserController {
       return {
         success: true,
         data: userData,
-        message: 'User registered successfully.',
+        message: "User registered successfully.",
       };
     } catch (err) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Some problem occurred, Try again later.',
+        message: "Some problem occurred, Try again later.",
         err: err.toString(),
       });
     }
   }
 
-  @Get('/users')
+  @Get("/users")
   async getUserData(@Query() data: GetDto) {
     try {
       const user = await this.userService.findUser(data);
 
       if (user == false) {
         return {
-          success: true,
-          data: user,
-          message: 'Record not found',
+          success: false,
+          message: "Record not found",
         };
       } else {
+        delete user.password;
         return {
           success: true,
           data: user,
-          message: 'Record found',
+          message: "Record found",
         };
       }
     } catch (err) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Some problem occurred, Try again later.',
+        message: "Some problem occurred, Try again later.",
         err: err.toString(),
       });
     }
   }
 
-  @Put('/users')
+  @Put("/users")
   async updateUserData(
     @Query() detail: GetDto,
-    @Body() data: UserDto,
+    @Body() data: UserDto
   ): Promise<any> {
     try {
       var user;
-   
+
       const userUpdated = await this.userService.updateUser(data, detail);
 
-      if ( userUpdated ) {
+      if (userUpdated) {
         user = await this.userService.findUpdateRecords(detail);
         return {
           success: true,
-          message: 'Record updated successfully.',
+          message: "Record updated successfully.",
           data: user,
         };
       } else {
         user = await this.userService.findUserList(detail);
         return {
           success: true,
-          message: 'Record fetched successfully.',
+          message: "Record fetched successfully.",
           data: user,
         };
       }
-      
     } catch (err) {
-      console.log(err);
-
       throw new InternalServerErrorException({
         success: false,
-        message: 'Some problem occurred, Try again later.',
+        message: "Some problem occurred, Try again later.",
         err: err.toString(),
       });
     }
   }
 
-  @Delete('/users')
+  @Delete("/users")
   async deleteUserData(@Query() data: GetDto): Promise<any> {
     try {
-      
       const user = await this.userService.deleteUser(data);
 
-      if( user == true ) {
+      if (user == true) {
         return {
-            success: true,
-            message: 'User deleted successfully.',
-          };
+          success: true,
+          message: "User deleted successfully.",
+        };
       } else {
         return {
-              success: HttpStatus.BAD_REQUEST,
-              message: 'User not found.',
-              error: {},
-            };
+          success: HttpStatus.BAD_REQUEST,
+          message: "User not found.",
+          error: {},
+        };
       }
-     
     } catch (err) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Some problem occurred, Try again later.',
+        message: "Some problem occurred, Try again later.",
         err: err.toString(),
       });
     }

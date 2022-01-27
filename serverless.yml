@@ -1,0 +1,36 @@
+service: backend-dev-test
+
+app: backend-dev-test
+org: XXXX
+
+useDotenv: true
+
+plugins:
+  - serverless-plugin-optimize
+  - serverless-offline
+  
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: dev
+  region: XXXX
+  lambdaHashingVersion: 20201221
+  environment:
+    PG_HOST_NAME: ${env:PG_HOST_NAME}
+    PG_HOST_PORT: ${env:PG_HOST_PORT}
+    PG_HOST_USER: ${env:PG_HOST_USER}
+    PG_HOST_PASSWORD: ${env:PG_HOST_PASSWORD}
+    PG_HOST_DATABASE: ${env:PG_HOST_DATABASE}
+
+functions:
+  main:
+    handler: dist/src/lambda.handler
+    events:
+      - http:
+          method: ANY
+          path: /
+      - http:
+          method: ANY
+          path: '{proxy+}'

@@ -11,19 +11,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const user_entity_1 = require("../../common/entities/user.entity");
-const password_1 = require("../../password");
+const password_1 = __importDefault(require("../../password"));
 let UserService = class UserService {
     constructor(userModel) {
         this.userModel = userModel;
-    }
-    createUsers(data) {
-        throw new Error('Method not implemented.');
     }
     async createUser(user) {
         const encriptedtPassword = await password_1.default.bcryptPassword(user.password);
@@ -71,7 +71,6 @@ let UserService = class UserService {
                 user = await this.userModel.findOne({
                     where: { userId: data.id, phoneNumber: `${data.phoneNumber}` },
                 });
-                delete user.password;
             }
             else {
                 user = await this.userModel.find();
@@ -79,7 +78,7 @@ let UserService = class UserService {
                     delete data.password;
                 });
             }
-            if (!user) {
+            if (!user || user == undefined) {
                 return false;
             }
             else {
@@ -107,10 +106,11 @@ let UserService = class UserService {
                     .createQueryBuilder()
                     .update(user_entity_1.User)
                     .set(userData)
-                    .where("userId IN (:...id)" && "phoneNumber IN (:...phone)", { id: ids } && { phone: phoneNumber })
+                    .where("userId IN (:...id)", { id: ids })
+                    .andWhere("phoneNumber IN (:...phone)", { phone: phoneNumber })
                     .execute();
             }
-            if (!user) {
+            if (!user || user.affected == 0) {
                 return false;
             }
             else {
@@ -123,16 +123,21 @@ let UserService = class UserService {
     }
     async deleteUser(detail) {
         try {
-            let deleteUser;
             var ids = JSON.parse(`${detail.id}`);
             var phoneNumber = JSON.parse(`${detail.phoneNumber}`);
-            await this.userModel
+            const deleteUser = await this.userModel
                 .createQueryBuilder()
                 .delete()
                 .from(user_entity_1.User)
-                .where("userId IN (:...id)" && "phoneNumber IN (:...phone)", { id: ids } && { phone: phoneNumber })
+                .where("userId IN (:...id)", { id: ids })
+                .andWhere("phoneNumber IN (:...phone)", { phone: phoneNumber })
                 .execute();
-            return true;
+            if (!deleteUser || deleteUser.affected == 0) {
+                return false;
+            }
+            else {
+                return true;
+            }
         }
         catch (error) {
             console.log(error);
@@ -158,7 +163,8 @@ let UserService = class UserService {
             var phoneNumber = JSON.parse(`${detail.phoneNumber}`);
             user = await this.userModel
                 .createQueryBuilder()
-                .where("User.userId IN (:...id)" && "User.phoneNumber IN (:...phone)", { id: ids } && { phone: phoneNumber })
+                .where(`"userId" IN (:...id)`, { id: ids })
+                .andWhere(`"phoneNumber" IN (:...phone)`, { phone: phoneNumber })
                 .getMany();
             user.map((data) => {
                 delete data.password;

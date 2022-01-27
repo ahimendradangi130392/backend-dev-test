@@ -5,6 +5,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
@@ -14,7 +17,7 @@ const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const feature_module_1 = require("./features/feature.module");
 const typeorm_1 = require("@nestjs/typeorm");
-const typeorm_config_1 = require("../config/typeorm.config");
+const typeorm_config_1 = __importDefault(require("../config/typeorm.config"));
 const nestjs_rollbar_1 = require("nestjs-rollbar");
 let AppModule = class AppModule {
 };
@@ -28,8 +31,8 @@ AppModule = __decorate([
                 useFactory: typeorm_config_1.default,
             }),
             nestjs_rollbar_1.LoggerModule.forRoot({
-                accessToken: 'ROLLBAR_TOKEN',
-                environment: 'ENVIROMENT',
+                accessToken: "ROLLBAR_TOKEN",
+                environment: "ENVIROMENT",
             }),
             feature_module_1.FeaturesModule,
             schedule_1.ScheduleModule,

@@ -1,13 +1,12 @@
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from "bcryptjs";
 
-const bcryptPassword = async function (password){
-    const saltGenerate = 10;
-    const hash = await bcrypt.hash(password, saltGenerate);
-    return hash;
-}
+const bcryptPassword = async function (password) {
+  const hash = await bcrypt.hash(password, 10);
+  return hash;
+};
 
 const password = {
-    bcryptPassword
-}
+  bcryptPassword,
+};
 
 export default password;

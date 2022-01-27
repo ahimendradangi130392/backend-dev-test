@@ -26,7 +26,7 @@ let UserController = class UserController {
             if (user) {
                 return {
                     success: false,
-                    message: 'User already registered.',
+                    message: "User already registered.",
                     error: {},
                 };
             }
@@ -35,13 +35,13 @@ let UserController = class UserController {
             return {
                 success: true,
                 data: userData,
-                message: 'User registered successfully.',
+                message: "User registered successfully.",
             };
         }
         catch (err) {
             throw new common_1.InternalServerErrorException({
                 success: false,
-                message: 'Some problem occurred, Try again later.',
+                message: "Some problem occurred, Try again later.",
                 err: err.toString(),
             });
         }
@@ -51,23 +51,23 @@ let UserController = class UserController {
             const user = await this.userService.findUser(data);
             if (user == false) {
                 return {
-                    success: true,
-                    data: user,
-                    message: 'Record not found',
+                    success: false,
+                    message: "Record not found",
                 };
             }
             else {
+                delete user.password;
                 return {
                     success: true,
                     data: user,
-                    message: 'Record found',
+                    message: "Record found",
                 };
             }
         }
         catch (err) {
             throw new common_1.InternalServerErrorException({
                 success: false,
-                message: 'Some problem occurred, Try again later.',
+                message: "Some problem occurred, Try again later.",
                 err: err.toString(),
             });
         }
@@ -80,7 +80,7 @@ let UserController = class UserController {
                 user = await this.userService.findUpdateRecords(detail);
                 return {
                     success: true,
-                    message: 'Record updated successfully.',
+                    message: "Record updated successfully.",
                     data: user,
                 };
             }
@@ -88,16 +88,15 @@ let UserController = class UserController {
                 user = await this.userService.findUserList(detail);
                 return {
                     success: true,
-                    message: 'Record fetched successfully.',
+                    message: "Record fetched successfully.",
                     data: user,
                 };
             }
         }
         catch (err) {
-            console.log(err);
             throw new common_1.InternalServerErrorException({
                 success: false,
-                message: 'Some problem occurred, Try again later.',
+                message: "Some problem occurred, Try again later.",
                 err: err.toString(),
             });
         }
@@ -108,13 +107,13 @@ let UserController = class UserController {
             if (user == true) {
                 return {
                     success: true,
-                    message: 'User deleted successfully.',
+                    message: "User deleted successfully.",
                 };
             }
             else {
                 return {
                     success: common_1.HttpStatus.BAD_REQUEST,
-                    message: 'User not found.',
+                    message: "User not found.",
                     error: {},
                 };
             }
@@ -122,28 +121,28 @@ let UserController = class UserController {
         catch (err) {
             throw new common_1.InternalServerErrorException({
                 success: false,
-                message: 'Some problem occurred, Try again later.',
+                message: "Some problem occurred, Try again later.",
                 err: err.toString(),
             });
         }
     }
 };
 __decorate([
-    (0, common_1.Post)('/users'),
+    (0, common_1.Post)("/users"),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [user_dto_1.UserDto]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "saveUserData", null);
 __decorate([
-    (0, common_1.Get)('/users'),
+    (0, common_1.Get)("/users"),
     __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [user_dto_1.GetDto]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "getUserData", null);
 __decorate([
-    (0, common_1.Put)('/users'),
+    (0, common_1.Put)("/users"),
     __param(0, (0, common_1.Query)()),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -152,7 +151,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "updateUserData", null);
 __decorate([
-    (0, common_1.Delete)('/users'),
+    (0, common_1.Delete)("/users"),
     __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [user_dto_1.GetDto]),
